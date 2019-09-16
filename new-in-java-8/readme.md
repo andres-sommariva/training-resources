@@ -1,6 +1,6 @@
-# New In Java 8
+# Lambdas, Streams, Optionals & Default in Java
 
-Welcome to this 'New In Java 8' training resource.
+Welcome to this 'Lambdas, Streams, Optionals & Default in Java' training resource.
 
 In this training you will practice your skills on:
 * Lambda Expressions
