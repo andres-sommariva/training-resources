@@ -98,17 +98,54 @@ public class OptionalsTest {
     }
 
     @Test
-    public void testGetPurchaseOrdersReportLines_items_withBillingAddress() {
+    public void testGetPurchaseOrdersReportLines_items_noShippingAddress_noBillingAddress() {
         Optionals.PurchaseOrder purchaseOrder = Optionals.PurchaseOrder.builder()
                 .buyer(user_with_fullName)
                 .seller(Optional.of(user_without_fullName))
-                .shippingAddress(Optional.of(shippingAddress))
-                .billingAddress(Optional.of(billingAddress))
+                .shippingAddress(Optional.empty())
+                .billingAddress(Optional.empty())
                 .items(purchaseOrderItems)
                 .build();
 
         List<String> reportLines = optionals.getPurchaseOrdersReportLines(purchaseOrder);
 
         assertEquals(reportLines.size(), 3, "Report should have 3 lines");
+        assertEquals(reportLines.get(1), "product without code - Ship to: personal address, city, postal code, country - Bill to: personal address, city, postal code, country");
+        assertEquals(reportLines.get(2), "CODE1 - NON-SHIPPABLE - Bill to: personal address, city, postal code, country");
     }
+
+    @Test
+    public void testGetPurchaseOrdersReportLines_items_withShippingAddress_noBillingAddress() {
+        Optionals.PurchaseOrder purchaseOrder = Optionals.PurchaseOrder.builder()
+                .buyer(user_with_fullName)
+                .seller(Optional.of(user_without_fullName))
+                .shippingAddress(Optional.of(shippingAddress))
+                .billingAddress(Optional.empty())
+                .items(purchaseOrderItems)
+                .build();
+
+        List<String> reportLines = optionals.getPurchaseOrdersReportLines(purchaseOrder);
+
+        assertEquals(reportLines.size(), 3, "Report should have 3 lines");
+        assertEquals(reportLines.get(1), "product without code - Ship to: shipping address, city, postal code, country - Bill to: shipping address, city, postal code, country");
+        assertEquals(reportLines.get(2), "CODE1 - NON-SHIPPABLE - Bill to: shipping address, city, postal code, country");
+    }
+
+    @Test
+    public void testGetPurchaseOrdersReportLines_items_withShippingAddress_withBillingAddress() {
+        Optionals.PurchaseOrder purchaseOrder = Optionals.PurchaseOrder.builder()
+                .buyer(user_with_fullName)
+                .seller(Optional.of(user_without_fullName))
+                .shippingAddress(Optional.of(shippingAddress))
+                .billingAddress(Optional.empty())
+                .items(purchaseOrderItems)
+                .build();
+
+        List<String> reportLines = optionals.getPurchaseOrdersReportLines(purchaseOrder);
+
+        assertEquals(reportLines.size(), 3, "Report should have 3 lines");
+        assertEquals(reportLines.get(1), "product without code - Ship to: shipping address, city, postal code, country - Bill to: billing address, city, postal code, country");
+        assertEquals(reportLines.get(2), "CODE1 - NON-SHIPPABLE - Bill to: billing address, city, postal code, country");
+    }
+
 }
