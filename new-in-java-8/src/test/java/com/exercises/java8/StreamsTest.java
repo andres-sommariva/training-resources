@@ -93,6 +93,6 @@ public class StreamsTest {
 
     @Test
     public void testGetSumOfAllDistances_empty() {
-        assertEquals(streams.getSumOfAllDistances(Collections.EMPTY_LIST), 0);
+        assertEquals(streams.getSumOfAllDistances(Collections.EMPTY_LIST), 0.0);
     }
 }
