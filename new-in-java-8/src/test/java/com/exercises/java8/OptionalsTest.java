@@ -137,7 +137,7 @@ public class OptionalsTest {
                 .buyer(user_with_fullName)
                 .seller(Optional.of(user_without_fullName))
                 .shippingAddress(Optional.of(shippingAddress))
-                .billingAddress(Optional.empty())
+                .billingAddress(Optional.of(billingAddress))
                 .items(purchaseOrderItems)
                 .build();
 
