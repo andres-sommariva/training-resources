@@ -70,16 +70,16 @@ public class Optionals {
 
         reportLines.add("Buyer: " + buyer.fullName.orElse(buyer.userName) + seller.map(s -> " - Seller: " + s.fullName.orElse(s.userName)).orElse(""));
         items.stream().forEach(item -> reportLines.add(item.productCode.orElse(item.productName)
-            + " - "
-            + (!item.isShippable ? "NON-SHIPPABLE"
-            : "Ship to: " + purchaseOrder.shippingAddress.map(sa -> sa.toString())
-            .orElse(buyer.personalAddress.toString()))
-            + " - Bill to: "
-            + purchaseOrder.billingAddress.map(ba -> ba.toString())
-            .orElse(purchaseOrder.shippingAddress.map(sa -> sa.toString())
-              .orElse(buyer.personalAddress.toString()))
-          )
-        );
+                                                        + " - "
+                                                        + (!item.isShippable ? "NON-SHIPPABLE"
+                                                                    : "Ship to: " + purchaseOrder.shippingAddress.map(sa -> sa.toString())
+                                                                                                .orElse(buyer.personalAddress.toString()))
+                                                        + " - Bill to: "
+                                                        + purchaseOrder.billingAddress.map(ba -> ba.toString())
+                                                                    .orElse(purchaseOrder.shippingAddress.map(sa -> sa.toString())
+                                                                        .orElse(buyer.personalAddress.toString()))
+                                                        )
+                            );
 
         return reportLines;
     }
