@@ -3,8 +3,7 @@ package com.exercises.java8;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.stream.IntStream;
 
 public class LambdaExpressions {
 
@@ -21,18 +20,14 @@ public class LambdaExpressions {
     }
 
     private Predicate<Integer> oddFilter() {
-        // TODO: Implement this method
-        throw new NotImplementedException();
+        return i -> i % 2 != 0;
     }
 
     private Predicate<Integer> primeFilter() {
-        // TODO: Implement this method
-        throw new NotImplementedException();
+        return i -> i > 1 && IntStream.rangeClosed(2, i / 2).filter(n -> i % n == 0).count() == 0;
     }
 
     private Predicate<Integer> perfectFilter() {
-        // TODO: Implement this method
-        throw new NotImplementedException();
+        return i -> i > 0 && IntStream.rangeClosed(1, i / 2).filter(n -> i % n == 0).sum() == i;
     }
-
 }

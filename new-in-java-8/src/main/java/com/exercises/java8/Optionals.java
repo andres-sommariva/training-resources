@@ -1,12 +1,11 @@
 package com.exercises.java8;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import lombok.Builder;
 import lombok.Data;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Optionals {
 
@@ -39,6 +38,11 @@ public class Optionals {
         private String city;
         private String postalCode;
         private String street;
+
+        @Override
+        public String toString() {
+            return street + ", " + city + ", " + postalCode + ", " + country;
+        }
     }
 
     /**
@@ -57,8 +61,26 @@ public class Optionals {
      * @return
      */
     public List<String> getPurchaseOrdersReportLines(PurchaseOrder purchaseOrder) {
-        // TODO: Implement this method (see method javadoc for details)
-        throw new NotImplementedException();
-    }
 
+        List<String> reportLines = new ArrayList<>();
+
+        User buyer = purchaseOrder.buyer;
+        Optional<User> seller = purchaseOrder.seller;
+        List<PurchaseOrderItem> items = purchaseOrder.items;
+
+        reportLines.add("Buyer: " + buyer.fullName.orElse(buyer.userName) + seller.map(s -> " - Seller: " + s.fullName.orElse(s.userName)).orElse(""));
+        items.stream().forEach(item -> reportLines.add(item.productCode.orElse(item.productName)
+            + " - "
+            + (!item.isShippable ? "NON-SHIPPABLE"
+            : "Ship to: " + purchaseOrder.shippingAddress.map(sa -> sa.toString())
+            .orElse(buyer.personalAddress.toString()))
+            + " - Bill to: "
+            + purchaseOrder.billingAddress.map(ba -> ba.toString())
+            .orElse(purchaseOrder.shippingAddress.map(sa -> sa.toString())
+              .orElse(buyer.personalAddress.toString()))
+          )
+        );
+
+        return reportLines;
+    }
 }
