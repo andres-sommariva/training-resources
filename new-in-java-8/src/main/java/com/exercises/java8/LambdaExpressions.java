@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class LambdaExpressions {
 
     public List<Integer> findOddNumbers(List<Integer> numbers) {
@@ -21,18 +19,31 @@ public class LambdaExpressions {
     }
 
     private Predicate<Integer> oddFilter() {
-        // TODO: Implement this method
-        throw new NotImplementedException();
+        return x -> x % 2 == 1;
     }
 
     private Predicate<Integer> primeFilter() {
-        // TODO: Implement this method
-        throw new NotImplementedException();
+        return x -> {
+            if (x == 1) return false;
+            for(int i = 2; i <= x/2; ++i) {
+                if(x % i == 0) {
+                    return false;
+                }
+            }
+            return true;
+        };
     }
 
     private Predicate<Integer> perfectFilter() {
-        // TODO: Implement this method
-        throw new NotImplementedException();
+        return x -> {
+            int sum = 0;
+            for (int i = 1; i < x; i++) {
+                if (x % i == 0) {
+                    sum = sum + i;
+                }
+            }
+            return sum == x;
+        };
     }
 
 }
