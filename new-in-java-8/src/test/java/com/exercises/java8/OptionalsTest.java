@@ -1,6 +1,6 @@
 package com.exercises.java8;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collections;
